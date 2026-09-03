@@ -19,7 +19,7 @@ $router->post('/api/register', function() use ($auth){
 
     if($email === '' || $password === ''){
         http_response_code(400);
-        echo json_encode(['error' => 'Email e senha são obrigatórios'])
+        echo json_encode(['error' => 'Email e senha são obrigatórios']);
         return 
     }   
 
@@ -28,7 +28,6 @@ $router->post('/api/register', function() use ($auth){
         http_response_code(400);
     }
     echo json_encode($result);
-
 });
 
 $router->post('/api/login', function() use ($auth) {
@@ -37,8 +36,8 @@ $router->post('/api/login', function() use ($auth) {
     $password = $data['password'] ?? '';
     if($email === '' || $password === ''){
         http_response_code(400);
-        echo json_encode(['error' => 'Email e senha são obrigatórios'])
-        return 
+        echo json_encode(['error' => 'Email e senha são obrigatórios']);
+        return;
     }   
     $result = $auth->authenticate($email, $password);
 

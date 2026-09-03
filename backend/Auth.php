@@ -1,15 +1,17 @@
 <?php
 require_once __DIR__ . '/Database.php';
-
+require_once __DIR__ . '/JWT.php';
 // JWT/session — sem isso o frontend não mantém login. Adiciona quando for criar rotas protegidas.
 // Rate limiting — previne brute force. Adiciona quando colocar em produção.
 // Refresh token — se o access token expirar. Adiciona quando tiver token.
 
 class Auth {
     private mysqli $db;
+    private JWT $jwt;
 
     public function __construct(){
         $this->db = Database::getInstance()->getConnection();
+        $this->jwt = new JWT(getenv('JWT_SECRET'));
     }
 
     public function register(string $email, string $password): array {
@@ -56,10 +58,19 @@ class Auth {
         $user = $result->fetch_assoc();
 
         if(!password_verify($password, $user['password'])){
-            return ['error' => 'Credenciais inválidas']
+            return ['error' => 'Credenciais inválidas'];
         }
 
-        return ['id' => $user['id'], 'email' => $email];
+        $token = $this->jwt->generate([
+            'sub' => $user['id'], 
+            'email' => $email
+        ]);
+
+        return [
+            'id' => $user['id'], 
+            'email' => $email,
+            'token' => $token
+        ];
 
     }
 }
