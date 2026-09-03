@@ -3,11 +3,11 @@ class Router {
     private array $routes = [];
 
     public function get(string $path, callable $handler): void {
-        $this->routes['GET' . $path] = $handler;
+        $this->routes['GET ' . $path] = $handler;
     }
 
     public function post(string $path, callable $handler): void {
-        $this->routes['POST' . $path] = $handler;
+        $this->routes['POST ' . $path] = $handler;
     }
 
     public function dispatch(): void {
@@ -15,7 +15,7 @@ class Router {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri = rtrim($uri, '/');
         $key = "$method $uri";
-
+        
         if(isset($this->routes[$key])){
             ($this->routes[$key])();
         } else {

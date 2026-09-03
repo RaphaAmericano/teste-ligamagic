@@ -20,7 +20,7 @@ $router->post('/api/register', function() use ($auth){
     if($email === '' || $password === ''){
         http_response_code(400);
         echo json_encode(['error' => 'Email e senha são obrigatórios']);
-        return 
+        return;
     }   
 
     $result = $auth->register($email, $password);

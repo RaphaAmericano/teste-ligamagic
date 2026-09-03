@@ -18,7 +18,7 @@ class JWT {
 
         $signature = $this->base64url(
             hash_hmac('sha256', "$header.$payloadEncoded", $this->secret, true)
-        )
+        );
 
         return "$header.$payloadEncoded.$signature";
     }

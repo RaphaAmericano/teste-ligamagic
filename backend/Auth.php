@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/JWT.php';
-// JWT/session — sem isso o frontend não mantém login. Adiciona quando for criar rotas protegidas.
+
 // Rate limiting — previne brute force. Adiciona quando colocar em produção.
 // Refresh token — se o access token expirar. Adiciona quando tiver token.
 
@@ -36,8 +36,12 @@ class Auth {
         $stmt->bind_param('ss', $email, $hash);
 
         if($stmt->execute()){
-            $id = $stmt->insert_id;
             $stmt->close();
+            $res = $this->db->prepare("SELECT id FROM user WHERE email = ?");
+            $res->bind_param('s', $email);
+            $res->execute();
+            $id = $res->get_result()->fetch_assoc()['id'];
+            $res->close();
             return ['id' => $id, 'email' => $email];
         }
         $stmt->close();
