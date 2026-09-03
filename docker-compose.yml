@@ -1,0 +1,43 @@
+services:
+  frontend:
+    container_name: teste_ligamagic_frontend
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    networks:
+      - app-network
+
+  backend:
+    container_name: teste_ligamagic_backend
+    build: ./backend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - app-network
+  db:
+    container_name: teste_ligamagic_database
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./backend/sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    networks:
+      - app-network
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
