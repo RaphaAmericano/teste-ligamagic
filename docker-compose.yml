@@ -12,6 +12,8 @@ services:
   backend:
     container_name: teste_ligamagic_backend
     build: ./backend
+    env_file:
+      - ./backend/.env
     ports:
       - "8080:80"
     volumes:
@@ -27,7 +29,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: app
+      MYSQL_DATABASE: ligamagic
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     volumes:
