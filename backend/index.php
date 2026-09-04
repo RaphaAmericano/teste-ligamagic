@@ -4,6 +4,14 @@ require_once __DIR__ . '/Router.php';
 require_once __DIR__ . '/Auth.php';
 
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: http://localhost');
+header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
 
 $router = new Router();
 $auth = new Auth();
