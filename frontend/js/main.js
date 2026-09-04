@@ -1,5 +1,12 @@
 import { submitLogin, submitSignin } from "./auth.js"
 
+function toggleFormLoader(){
+    const form = document.querySelector('.main-form')
+    const loader = document.querySelector('.loader')
+    form.classList.toggle('hidden')
+    loader.classList.toggle('hidden')
+}
+
 const actions = {
     login: submitLogin,
     signin: submitSignin
@@ -7,6 +14,7 @@ const actions = {
 
 async function submitForm(event){
     event.preventDefault()
+    toggleFormLoader()
     const action = event.submitter.dataset.action
     const fn = actions[action]
     try {
@@ -19,9 +27,8 @@ async function submitForm(event){
         console.warn(error)
         alert(error.message)
     } finally {
-
+        toggleFormLoader()
     }
-
 }
 
 (() => {
