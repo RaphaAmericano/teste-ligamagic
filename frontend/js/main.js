@@ -1,4 +1,4 @@
-import { submitLogin, submitSignin } from "./auth.js"
+import { submitLogin, submitSignin, checkJwtToken } from "./auth.js"
 
 function toggleFormLoader(){
     const form = document.querySelector('.main-form')
@@ -31,8 +31,24 @@ async function submitForm(event){
     }
 }
 
+function guardRoutes(){
+    const isAuthPage = ['/index.html', '/signin.html', '/'].some(
+        path => location.pathname.endsWith(path) || location.pathname === path
+    )
+    const isLoggedPage = ['/dashboard.html'].some(
+        path => location.pathname.endsWith(path) || location.pathname === path
+    )
+    if(isAuthPage && checkJwtToken()){
+        window.location.href = "./dashboard.html"
+    }
+    if(isLoggedPage && !checkJwtToken()){
+        window.location.href = "./index.html"
+    }
+}
+
 (() => {
     console.log('Funcionando')
+    guardRoutes()
 
     document.addEventListener('DOMContentLoaded', () => {
         const form = document.forms[0]
