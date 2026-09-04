@@ -1,36 +1,38 @@
 <html>
     <head>
-        <title>Portal Ligamagic</title>
+        <meta charset="UTF-8">
+        <title>Portal Ligamagic - Dashboard</title>
         <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
         <nav>
-
+            <button id="logout-button" type="button">Sair</button>
         </nav>
         <main>
             <div>
                 <h1>Bem vindo ao Portal Ligamagic</h1>
             </div>
             <div>
-                <h2>Login</h2>
-                <form>
-                    <div>
-                        <label for="email">email</label>
-                        <input name="email" type="email">
-                    </div>
-                    <div>
-                        <label for="password">senha</label>
-                        <input name="password" type="password">
-                    </div>
-                    <button id="loginSubmitButton" type="submit" data-action="login">Entrar</button>
-                </form>
-            </div>
-            <div>
-                <h3>Não possui cadastro?</h3>
-                <a href="./signin.html">Cadastre-se!</a>
+                <h2>Lista de cartas</h2>
+                <div>
+                    <table class="card-list-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome (Português)</th>
+                                <th scope="col">Nome (Inglês)</th>
+                                <th scope="col">Card Game</th>
+                                <th scope="col">Edição</th>
+                                <th scope="col">Raridade</th>
+                                <th scope="col">Editar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </body>
     
     <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/dashboard.js"></script>
 </html>

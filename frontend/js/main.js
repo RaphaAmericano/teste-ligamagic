@@ -31,6 +31,13 @@ async function submitForm(event){
     }
 }
 
+function logout(e){
+    
+    console.log('logout', e)
+    localStorage.removeItem('ligamagicJwtToken')
+    window.location.replace("./index.html")
+}
+
 function guardRoutes(){
     const isAuthPage = ['/index.html', '/signin.html', '/'].some(
         path => location.pathname.endsWith(path) || location.pathname === path
@@ -39,10 +46,10 @@ function guardRoutes(){
         path => location.pathname.endsWith(path) || location.pathname === path
     )
     if(isAuthPage && checkJwtToken()){
-        window.location.href = "./dashboard.html"
+        window.location.replace("./dashboard.html")
     }
     if(isLoggedPage && !checkJwtToken()){
-        window.location.href = "./index.html"
+        window.location.replace("./index.html")
     }
 }
 
@@ -52,16 +59,16 @@ function guardRoutes(){
 
     document.addEventListener('DOMContentLoaded', () => {
         const form = document.forms[0]
-        if(!form){
-            console.error('Erro ao carregar o form')
-            return 
+        if(form ){
+            form.addEventListener('submit', submitForm)
         }
-        const loginSubmitButton = document.getElementById('loginSubmitButton')
-        const signinSubmitButton = document.getElementById('signinSubmitButton')
 
-        if( !loginSubmitButton && !signinSubmitButton ) return 
+        const logoutButton = document.getElementById('logout-button')
+        console.log('button',logoutButton)
+        if(logoutButton){
+            logoutButton.addEventListener('click', logout)
+        }
 
-        form.addEventListener('submit', submitForm)
     })
 
 })()

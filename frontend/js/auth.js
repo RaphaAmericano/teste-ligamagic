@@ -14,7 +14,6 @@ export async function submitSignin(data){
 }
 
 export function checkJwtToken(){
-    console.log('check')
     const token = localStorage.getItem('ligamagicJwtToken');
     if(!token) return false;
 
