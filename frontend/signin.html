@@ -11,8 +11,8 @@
                 <h1>Bem vindo ao Portal Ligamagic</h1>
             </div>
             <div>
-                <h2>Login</h2>
-                <form class="main-form login-form">
+                <h2>Cadastrar</h2>
+                <form class="main-form signin-form">
                     <div>
                         <label for="email">email</label>
                         <input name="email" type="email">
@@ -21,15 +21,18 @@
                         <label for="password">senha</label>
                         <input name="password" type="password">
                     </div>
-                    <button id="loginSubmitButton" type="submit" data-action="login">Entrar</button>
+                    <div>
+                        <label for="repeatPassword">repetir senha</label>
+                        <input name="repeatPassword" type="password">
+                    </div>
+                    <button id="signinSubmitButton" type="submit" data-action="signin">Entrar</button>
                 </form>
             </div>
             <div>
-                <h3>Não possui cadastro?</h3>
-                <a href="./signin.html">Cadastre-se!</a>
+                <h3>Já possui cadastro?</h3>
+                <a href="./index.html">Entre aqui!</a>
             </div>
         </main>
     </body>
-    
     <script type="module" src="./js/main.js"></script>
 </html>
