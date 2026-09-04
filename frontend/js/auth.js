@@ -12,3 +12,15 @@ export async function submitSignin(data){
     if(password.value.trim() !== repeatPassword.value.trim()) throw Error("Passwords não estão iguais.")
     return await postSignin(email.value.trim(), password.value.trim())
 }
+
+export function checkJwtToken(){
+    const token = localStorage.getItem('ligamagicJwtToken');
+    if(!token) return false;
+
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.exp * 1000 > Date.now();
+    } catch (error) {
+        return false
+    }
+}
