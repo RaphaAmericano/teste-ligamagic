@@ -1,0 +1,128 @@
+{
+    "magic": [
+        {
+        "rarity_value": 1,
+        "code": "C",
+        "name": "Comum"
+        },
+        {
+        "rarity_value": 2,
+        "code": "U",
+        "name": "Incomum"
+        },
+        {
+        "rarity_value": 3,
+        "code": "R",
+        "name": "Rara"
+        },
+        {
+        "rarity_value": 4,
+        "code": "M",
+        "name": "Mítica Rara"
+        }
+    ],
+    "pokemon":[
+            {
+            "rarity_value": 1,
+            "code": "C",
+            "name": "Comum"
+            },
+            {
+            "rarity_value": 2,
+            "code": "U",
+            "name": "Incomum"
+            },
+            {
+            "rarity_value": 3,
+            "code": "R",
+            "name": "Rara"
+            },
+            {
+            "rarity_value": 4,
+            "code": "RH",
+            "name": "Reverse Holo"
+            },
+            {
+            "rarity_value": 5,
+            "code": "H",
+            "name": "Rara Holo"
+            },
+            {
+            "rarity_value": 6,
+            "code": "UR",
+            "name": "Ultra Rara"
+            },
+            {
+            "rarity_value": 7,
+            "code": "IR",
+            "name": "Ilustração Rara"
+            },
+            {
+            "rarity_value": 8,
+            "code": "SIR",
+            "name": "Ilustração Especial Rara"
+            },
+            {
+            "rarity_value": 9,
+            "code": "HR",
+            "name": "Híper Rara"
+            },
+            {
+            "rarity_value": 10,
+            "code": "PROMO",
+            "name": "Promocional"
+            }
+    ],
+    "yugioh":[
+        {
+        "rarity_value": 1,
+        "code": "C",
+        "name": "Comum"
+        },
+        {
+        "rarity_value": 2,
+        "code": "R",
+        "name": "Rara"
+        },
+        {
+        "rarity_value": 3,
+        "code": "SR",
+        "name": "Super Rara"
+        },
+        {
+        "rarity_value": 4,
+        "code": "UR",
+        "name": "Ultra Rara"
+        },
+        {
+        "rarity_value": 5,
+        "code": "ScR",
+        "name": "Secret Rara"
+        },
+        {
+        "rarity_value": 6,
+        "code": "UtR",
+        "name": "Ultimate Rara"
+        },
+        {
+        "rarity_value": 7,
+        "code": "CR",
+        "name": "Collector's Rara"
+        },
+        {
+        "rarity_value": 8,
+        "code": "GR",
+        "name": "Ghost Rara"
+        },
+        {
+        "rarity_value": 9,
+        "code": "StR",
+        "name": "Starlight Rara"
+        },
+        {
+        "rarity_value": 10,
+        "code": "QCScR",
+        "name": "Quarter Century Secret Rara"
+        }
+        ]
+}
