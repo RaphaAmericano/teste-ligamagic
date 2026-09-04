@@ -1,3 +1,4 @@
+import { submitNewCard } from "./cards.js"
 const cardGames = new Set(['magic', 'pokemon', 'yugioh'])
 
 const selectBoxSelectorsMap = {
@@ -55,18 +56,28 @@ async function setSelectOnChangeEvent(event){
     await loadRaritySelect(cardGame)
 }
 
-( async () => {
-    document.addEventListener('DOMContentLoaded', () => {
+async function submitNewCardForm(event){
+    event.preventDefault()
+    const { name_pt, name_en, card_game, card_set, rarity, image, } = event.target.elements
+    const formData = new FormData(event.target);
+    await submitNewCard(formData)
+}   
+
+( () => {
+    document.addEventListener('DOMContentLoaded', async () => {
         const res = await fetch('./json/rarity.json')
         const data = await res.json()
         
         const setCardGameBox = document.querySelector('[name="card_game"]');
+        console.log(setCardGameBox)
         if(!setCardGameBox) throw new Error('Erro ao carregar seleção de card game')
             
         setCardGameBox.addEventListener('change', setSelectOnChangeEvent)
             
         const newCardForm = document.getElementById('newCardForm')
+        if(!newCardForm) throw new Error('Erro ao carregar formulário de nova carta')
+        
+        newCardForm.addEventListener('submit', submitNewCardForm)
     })
-
 
 })()
