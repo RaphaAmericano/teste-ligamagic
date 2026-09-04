@@ -19,5 +19,5 @@ export async function post(endpoint, data){
     })
     const json = await res.json()
     if(!res.ok) throw new Error(json.error || "Erro na requisição.")
-    return res.json()
+    return json
 }
