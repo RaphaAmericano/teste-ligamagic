@@ -62,13 +62,10 @@ function guardRoutes(){
         if(form ){
             form.addEventListener('submit', submitForm)
         }
-
         const logoutButton = document.getElementById('logout-button')
-        console.log('button',logoutButton)
         if(logoutButton){
             logoutButton.addEventListener('click', logout)
         }
-
     })
 
 })()

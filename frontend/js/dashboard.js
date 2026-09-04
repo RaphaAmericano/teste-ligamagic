@@ -56,15 +56,17 @@ async function setSelectOnChangeEvent(event){
 }
 
 ( async () => {
-    const res = await fetch('./json/rarity.json')
-    const data = await res.json()
-    
-    const newCardForm = document.getElementById('newCardForm')
-    
-    const setCardGameBox = document.querySelector('[name="card_game"]');
-    if(!setCardGameBox) throw new Error('Erro ao carregar seleção de card game')
+    document.addEventListener('DOMContentLoaded', () => {
+        const res = await fetch('./json/rarity.json')
+        const data = await res.json()
+        
+        const setCardGameBox = document.querySelector('[name="card_game"]');
+        if(!setCardGameBox) throw new Error('Erro ao carregar seleção de card game')
+            
+        setCardGameBox.addEventListener('change', setSelectOnChangeEvent)
+            
+        const newCardForm = document.getElementById('newCardForm')
+    })
 
-    setCardGameBox.addEventListener('change', setSelectOnChangeEvent)
-    
 
 })()
