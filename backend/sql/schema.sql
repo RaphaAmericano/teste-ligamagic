@@ -20,17 +20,10 @@ CREATE TABLE IF NOT EXISTS card (
 ) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS collection (
-    id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    name VARCHAR(255) NOT NULL,
-    id_user CHAR(36) NOT NULL,
-    FOREIGN KEY (id_user) REFERENCES user(id)
-);
-
-CREATE TABLE IF NOT EXISTS card_collection (
+CREATE TABLE IF NOT EXISTS user_card (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     id_card CHAR(36) NOT NULL,
-    id_collection CHAR(36) NOT NULL,
+    id_user CHAR(36) NOT NULL,
     FOREIGN KEY (id_card) REFERENCES card(id),
-    FOREIGN KEY (id_collection) REFERENCES collection(id)
+    FOREIGN KEY (id_user) REFERENCES user(id)
 );

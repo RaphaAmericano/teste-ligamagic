@@ -25,42 +25,6 @@ $cardController = new CardController($auth);
 $router->get('/api', function(){
     echo json_encode(['status' => 'ok', 'message' => 'API funcionando']);
 });
-
-// $router->post('/api/register', function() use ($auth){
-//     $data = json_decode(file_get_contents('php://input'), true);
-//     $email = $data['email'] ?? '';
-//     $password = $data['password'] ?? '';
-
-//     if($email === '' || $password === ''){
-    //         http_response_code(400);
-    //         echo json_encode(['error' => 'Email e senha são obrigatórios']);
-    //         return;
-    //     }   
-    
-    //     $result = $auth->register($email, $password);
-    //     if(isset($result['error'])){
-//         http_response_code(400);
-//     }
-//     echo json_encode($result);
-// });
-
-// $router->post('/api/login', function() use ($auth) {
-//     $data = json_decode(file_get_contents('php://input'), true);
-//     $email = $data['email'] ?? '';
-//     $password = $data['password'] ?? '';
-//     if($email === '' || $password === ''){
-//         http_response_code(400);
-//         echo json_encode(['error' => 'Email e senha são obrigatórios']);
-//         return;
-//     }   
-//     $result = $auth->authenticate($email, $password);
-    
-//     if (isset($result['error'])) {
-//         http_response_code(401);
-//     }
-//     echo json_encode($result);
-// });
-
 $router->post('/api/register', fn() => $authController->register());
 $router->post('/api/login', fn() => $authController->login());
 $router->post('/api/card', fn() => $cardController->create());

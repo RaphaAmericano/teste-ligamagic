@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../Auth.php';
 require_once __DIR__ . '/../utils/RarityMap.php';
+require_once __DIR__ . '/../utils/UUID.php';
 
 class CardController {
     private Auth $auth;
@@ -16,7 +17,7 @@ class CardController {
             echo json_encode(['error' => 'Token inválido ou ausente.']);
             return;
         }
-    
+
         $name_pt = $_POST['name_pt'] ?? '';
         $name_en = $_POST['name_en'] ?? '';
         $card_game = $_POST['card_game'] ?? '';
@@ -29,7 +30,7 @@ class CardController {
             echo json_encode(['error' => 'Raridade inválida']);
             return;
         }
-        error_log('rarityCode: ' . $rarityCode);
+
         if(!$name_pt || !$name_en || !$card_game || !$card_set || !$rarity ){
             http_response_code(400);
             echo json_encode(['error' => 'Todos os campos são obrigatórios.']);
@@ -45,13 +46,19 @@ class CardController {
             move_uploaded_file($_FILES['image']['tmp_name'], $dest);
             $img_url = '/uploads/' . $filename;
         }
-    
+        $card_id = UUID::createUUID();
         $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare('INSERT INTO card (name_pt, name_ig, card_game, card_set, rarity, img_url) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->bind_param('ssssss', $name_pt, $name_en, $card_game, $card_set, $rarity, $img_url );
-    
-        if($stmt->execute()){
-            echo json_encode(['id' => $db->insert_id, 'message' => 'Carta registrada com sucesso']);
+        $stmt = $db->prepare('INSERT INTO card (id, name_pt, name_ig, card_game, card_set, rarity, img_url) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('sssssss', $card_id, $name_pt, $name_en, $card_game, $card_set, $rarity, $img_url );
+
+        if($stmt->execute()){                       
+            $user_id = $payload['sub'];
+
+            $rel = $db->prepare('INSERT INTO user_card (id_card, id_user) VALUES (?, ?)');
+            $rel->bind_param('ss', $card_id, $user_id);
+            $rel->execute();
+            $rel->close();
+            echo json_encode(['id' => $card_id, 'message' => 'Carta registrada com sucesso']);
         } else {
             http_response_code(500);
             echo json_encode(['error' => 'Erro ao salva carta']);
