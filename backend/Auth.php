@@ -77,4 +77,12 @@ class Auth {
         ];
 
     }
+
+    public function verifyToken(): ?array {
+        $token = $this->jwt->extractFromHeader();
+        if(!$token) return null;
+        $result = $this->jwt->verify($token);
+        return $result ?: null;
+    }
+
 }
