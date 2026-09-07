@@ -120,6 +120,35 @@ class CardController {
     }
 
     public function userCards(): void {
+        $payload = $this->auth->verifyToken();
+        if(!$payload){
+            http_response_code(401);
+            echo json_encode(['error' => 'Token inválido ou ausente.'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
 
+        $user_id = $payload['sub'];
+        $db = Database::getInstance()->getConnection();
+
+        $stmt = $db->prepare('
+            SELECT c.id, c.name_ig, c.name_pt, c.card_set, c.card_game, c.rarity, c.img_url
+            FROM card c
+            INNER JOIN user_card uc ON uc.id_card = c.id
+            WHERE uc.id_user = ?
+        ');
+        $stmt->bind_param('s', $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $cards = [];
+        while($row = $result->fetch_assoc()){
+            if($row['img_url'] && str_starts_with($row['img_url'], '/')){
+                $row['img_url'] = 'http://localhost:8080' . $row['img_url'];
+            }
+            $cards[] = $row;
+        }
+        $response = ["items" => $cards, "count" => count($cards)];
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        $stmt->close();
     }
 }
