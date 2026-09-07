@@ -1,0 +1,21 @@
+<?php
+const RARITY_MAP = [
+    'C'     => 'common',
+    'U'     => 'uncommon',
+    'R'     => 'rare',
+    'M'     => 'mythic_rare',
+    'RH'    => 'reverse_holo',
+    'H'     => 'rare_holo',
+    'UR'    => 'ultra_rare',
+    'IR'    => 'illustration_rare',
+    'SIR'   => 'special_illustration_rare',
+    'HR'    => 'hyper_rare',
+    'PROMO' => 'promotional',
+    'SR'    => 'super_rare',
+    'ScR'   => 'secret_rare',
+    'UtR'   => 'ultimate_rare',
+    'CR'    => 'collectors_rare',
+    'GR'    => 'ghost_rare',
+    'StR'   => 'starlight_rare',
+    'QCScR' => 'quarter_century_secret_rare',
+];
