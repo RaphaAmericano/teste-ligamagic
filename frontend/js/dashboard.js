@@ -11,6 +11,14 @@ function clearSelectBox(selector){
     setSelectBox.innerHTML = ""
 }
 
+function clearSelectBoxes(){
+    ["gameSet", 'rarity'].forEach((tag) => {
+        const selector = selectBoxSelectorsMap[tag]
+        const selectBox = document.querySelector(selector);
+        selectBox.innerHTML = ""
+    })
+}
+
 function toggleDisabledSubmitForm(){
     const submitButton = document.getElementById('submitNewCardButton')
     submitButton.disabled = !submitButton.disabled
@@ -68,11 +76,27 @@ async function loadRaritySelect(cardGame){
 
 async function setSelectOnChangeEvent(event){
     const cardGame = event.target.value
-    if(!cardGames.has(cardGame)) return
+    if(!cardGames.has(cardGame)) {
+        clearSelectBoxes()
+        setSubmitFormButtonDisabledState()
+        return 
+    }
+    addInfoMessage("Carregando edições")
+    await new Promise(r => setTimeout(r, 800));
+    addInfoMessage("")
     await loadSetSelect(cardGame)
     await loadRaritySelect(cardGame)
+    setSubmitFormButtonDisabledState()
 }
 
+
+async function setSubmitFormButtonDisabledState(){
+    const submitButton = document.getElementById('submitNewCardButton')
+    const selector = selectBoxSelectorsMap['gameSet']
+    const setSelectBox = document.querySelector(selector);
+    const hasOptions = setSelectBox.children.length > 0
+    submitButton.disabled = !hasOptions
+}
 async function submitNewCardForm(event){
     event.preventDefault()
     const formData = new FormData(event.target);
@@ -83,13 +107,13 @@ async function submitNewCardForm(event){
     const loadingInterval = setInterval(() => {
         dots = dots.length >= 3 ? "" : dots + '.';
         addInfoMessage('Salvando nova carta ' + dots)
+
     }, 400 )
     
     try {
         await new Promise(r => setTimeout(r, 800));
         const response = await submitNewCard(formData)
         clearInterval(loadingInterval)
-        console.log(response)
         addInfoMessage(response.message)
     } catch (error) {
         console.error(error);
