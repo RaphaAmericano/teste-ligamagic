@@ -33,13 +33,13 @@
                                 <option value="yugioh">Yu-Gi-Oh!</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="select-blocks">
                             <label for="card_set">Edições</label>
                             <select name="card_set">
                                 
                             </select>
                         </div>
-                        <div>
+                        <div class="select-blocks">
                             <label for="rarity">Raridade</label>
                             <select name="rarity">
                             </select>
@@ -49,9 +49,12 @@
                             <input name="image" type="file">
                         </div>
                         <div>
-                            <button type="submit">Salvar</button>
+                            <button id="submitNewCardButton" type="submit">Salvar</button>
                         </div>
                     </form>
+                </div>
+                <div id="infoDiv" class="hidden">
+                    <span id="warningText" class=""></span>
                 </div>
             </div>
         </main>

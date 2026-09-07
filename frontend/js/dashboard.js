@@ -10,6 +10,23 @@ function clearSelectBox(selector){
     const setSelectBox = document.querySelector(selector);
     setSelectBox.innerHTML = ""
 }
+
+function toggleDisabledSubmitForm(){
+    const submitButton = document.getElementById('submitNewCardButton')
+    submitButton.disabled = !submitButton.disabled
+}
+
+function toggleRequest(){
+    const infoDiv = document.getElementById('infoDiv') 
+    infoDiv.classList.toggle('hidden')
+}
+
+function addInfoMessage(value){
+    const infoDiv = document.getElementById('infoDiv')
+    const warningTextSpan = document.getElementById('warningText')
+    warningTextSpan.innerText = value;
+}
+
 async function loadSets(cardGame){
     const res = await fetch('./json/sets.json')
     const data = await res.json()
@@ -43,7 +60,7 @@ async function loadRaritySelect(cardGame){
     clearSelectBox(selector)
     for(const rarity of raritys){
         const option = document.createElement('option')
-        option.value = rarity.id 
+        option.value = rarity.code 
         option.textContent = rarity.name
         raritysSelectBox.appendChild(option)
     }
@@ -58,18 +75,43 @@ async function setSelectOnChangeEvent(event){
 
 async function submitNewCardForm(event){
     event.preventDefault()
-    const { name_pt, name_en, card_game, card_set, rarity, image, } = event.target.elements
     const formData = new FormData(event.target);
-    await submitNewCard(formData)
+    toggleDisabledSubmitForm()
+    toggleRequest();
+
+    let dots = '';
+    const loadingInterval = setInterval(() => {
+        dots = dots.length >= 3 ? "" : dots + '.';
+        addInfoMessage('Salvando nova carta ' + dots)
+    }, 400 )
+    
+    try {
+        await new Promise(r => setTimeout(r, 800));
+        const response = await submitNewCard(formData)
+        clearInterval(loadingInterval)
+        console.log(response)
+        addInfoMessage(response.message)
+    } catch (error) {
+        console.error(error);
+        clearInterval(loadingInterval)
+        addInfoMessage(error || "Erro ao salvar nova carta.")
+    } finally  {
+        setTimeout(() => {
+            console.log('Finally...')
+            toggleDisabledSubmitForm()
+            addInfoMessage("")
+            event.target.reset()
+            toggleRequest()
+        }, 5000);
+    }
 }   
 
 ( () => {
     document.addEventListener('DOMContentLoaded', async () => {
         const res = await fetch('./json/rarity.json')
         const data = await res.json()
-        
-        const setCardGameBox = document.querySelector('[name="card_game"]');
-        console.log(setCardGameBox)
+        const setCardGameBox = document.querySelector('[name="card_game"]')
+
         if(!setCardGameBox) throw new Error('Erro ao carregar seleção de card game')
             
         setCardGameBox.addEventListener('change', setSelectOnChangeEvent)
