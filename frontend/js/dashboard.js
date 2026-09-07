@@ -117,8 +117,9 @@ async function submitNewCardForm(event){
         addInfoMessage(response.message)
     } catch (error) {
         console.error(error);
+        console.error("message" ,error.message);
         clearInterval(loadingInterval)
-        addInfoMessage(error || "Erro ao salvar nova carta.")
+        addInfoMessage(error?.message || "Erro ao salvar nova carta.")
     } finally  {
         setTimeout(() => {
             console.log('Finally...')
