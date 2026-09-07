@@ -5,7 +5,12 @@ const selectBoxSelectorsMap = {
     gameSet: '[name="card_set"]',
     rarity: '[name="rarity"]',
 }
-
+function resetForm(form){
+    form.reset();
+    clearSelectBoxes()
+    const submitButton = document.getElementById('submitNewCardButton')
+    submitButton.disabled = true
+}
 function clearSelectBox(selector){
     const setSelectBox = document.querySelector(selector);
     setSelectBox.innerHTML = ""
@@ -22,11 +27,6 @@ function clearSelectBoxes(){
 function toggleDisabledSubmitForm(){
     const submitButton = document.getElementById('submitNewCardButton')
     submitButton.disabled = !submitButton.disabled
-}
-
-function toggleRequest(){
-    const infoDiv = document.getElementById('infoDiv') 
-    infoDiv.classList.toggle('hidden')
 }
 
 function addInfoMessage(value){
@@ -100,8 +100,6 @@ async function setSubmitFormButtonDisabledState(){
 async function submitNewCardForm(event){
     event.preventDefault()
     const formData = new FormData(event.target);
-    toggleDisabledSubmitForm()
-    toggleRequest();
 
     let dots = '';
     const loadingInterval = setInterval(() => {
@@ -115,6 +113,7 @@ async function submitNewCardForm(event){
         const response = await submitNewCard(formData)
         clearInterval(loadingInterval)
         addInfoMessage(response.message)
+        resetForm(event.target)
     } catch (error) {
         console.error(error);
         console.error("message" ,error.message);
@@ -123,10 +122,7 @@ async function submitNewCardForm(event){
     } finally  {
         setTimeout(() => {
             console.log('Finally...')
-            toggleDisabledSubmitForm()
             addInfoMessage("")
-            event.target.reset()
-            toggleRequest()
         }, 5000);
     }
 }   
