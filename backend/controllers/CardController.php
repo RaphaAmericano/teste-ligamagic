@@ -36,15 +36,23 @@ class CardController {
             echo json_encode(['error' => 'Todos os campos são obrigatórios.']);
             return;
         }
-    
+
         $img_url = null;
+        
         if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK){
             $file = $_FILES['image']['name'];
             $ext = pathinfo($file, PATHINFO_EXTENSION);
             $filename = uniqid() . '.' . $ext;
-            $dest = __DIR__ . '/../../uploads/' .$filename;
-            move_uploaded_file($_FILES['image']['tmp_name'], $dest);
-            $img_url = '/uploads/' . $filename;
+            $dest = __DIR__ . '/../uploads/' .$filename;
+            
+            error_log("[CardController] Upload recebido: name={$file}, ext={$ext} tmp={$_FILES['image']['tmp_name']}, size={$_FILES['image']['size']}");
+            if(move_uploaded_file($_FILES['image']['tmp_name'], $dest)){
+                $img_url = '/uploads/' . $filename;
+                error_log("[CardController] Arquivo salvo em: {$dest}");
+            } else {
+                error_log("[CardController] ERRO: falha ao mover arquivo para {$dest}");
+            }
+            
         }
         $card_id = UUID::createUUID();
         $db = Database::getInstance()->getConnection();
