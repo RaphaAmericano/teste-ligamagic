@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS user (
 
 CREATE TABLE IF NOT EXISTS card (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    name_ig VARCHAR(255) NOT NULL,
+    name_en VARCHAR(255) NOT NULL,
     name_pt VARCHAR(255) NOT NULL,
     card_set CHAR(36) NOT NULL, 
     card_game ENUM('magic', 'yugioh', 'pokemon') NOT NULL,

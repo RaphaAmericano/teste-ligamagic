@@ -101,7 +101,7 @@ class CardController {
 
         $card_id = UUID::createUUID();
         $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare('INSERT INTO card (id, name_pt, name_ig, card_game, card_set, rarity, img_url) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $stmt = $db->prepare('INSERT INTO card (id, name_pt, name_en, card_game, card_set, rarity, img_url) VALUES (?, ?, ?, ?, ?, ?, ?)');
         $stmt->bind_param('sssssss', $card_id, $name_pt, $name_en, $card_game, $card_set, $rarity, $img_url );
 
         if($stmt->execute()){                       
@@ -131,7 +131,7 @@ class CardController {
         $db = Database::getInstance()->getConnection();
 
         $stmt = $db->prepare('
-            SELECT c.id, c.name_ig, c.name_pt, c.card_set, c.card_game, c.rarity, c.img_url
+            SELECT c.id, c.name_en, c.name_pt, c.card_set, c.card_game, c.rarity, c.img_url
             FROM card c
             INNER JOIN user_card uc ON uc.id_card = c.id
             WHERE uc.id_user = ?
