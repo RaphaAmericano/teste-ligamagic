@@ -1,5 +1,18 @@
 import { getAllUserCards } from "./cards.js";
+import { loadMappers, cardGameMapper } from "./mappers.js";
 
+let setMapper = {};
+let rarityMapper = {};
+
+function getSetName(card){ 
+    const card_set = setMapper[card.card_game]?.[card.card_set] ?? card.card_set;
+    return card_set;
+}
+function getRarity(card){
+    console.log(rarityMapper)
+    const card_set = rarityMapper[card.card_game]?.[card.rarity] ?? card.rarity;
+    return card_set;
+} 
 
 function createNamePtTd(card){
     const tdElement = document.createElement('td')
@@ -13,17 +26,17 @@ function createNameEnTd(card){
 }
 function createCardGameTd(card){
     const tdElement = document.createElement('td')
-    tdElement.innerText = card.card_game;
+    tdElement.innerText = cardGameMapper(card.card_game);
     return tdElement
 }
 function createSetTd(card){
     const tdElement = document.createElement('td')
-    tdElement.innerText = card.card_set;
+    tdElement.innerText = getSetName(card);
     return tdElement
 }
 function createRarityTd(card){
     const tdElement = document.createElement('td')
-    tdElement.innerText = card.rarity;
+    tdElement.innerText = getRarity(card);
     return tdElement
 }
 function createImageTd(card){
@@ -44,12 +57,10 @@ function createEditTd(card){
     tdElement.appendChild(aElement);
     return tdElement;
 }
-
 function loadCardsRows(cards){
     const cardListTable = document.getElementById('cardListTable');
     const [tableHead, tableBody, tableFooter] = cardListTable.children;
     for(const card of cards ){
-        console.log(card)
         const newTr = document.createElement('tr')
         newTr.append(
             createNamePtTd(card),
@@ -67,18 +78,18 @@ function loadCardsRows(cards){
 }
 
 (() => {
+    
     document.addEventListener("DOMContentLoaded", async () => {
+        const mappers = await loadMappers()
+        setMapper = mappers.setMapper;
+        rarityMapper = mappers.rarityMapper;
         const res = await getAllUserCards()
-        
         const totalCountTd = document.getElementById('totalCount');
-
         if(!res) {
             // Todo: fazer um display de alerta 
             totalCountTd.innerText = 'Total: 0'
         }
         totalCountTd.innerText = `Total: ${res.count}`;
         loadCardsRows(res.items)
-
-
     })
 })()
