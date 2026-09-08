@@ -86,7 +86,6 @@ function loadCardsRows(cards){
         const res = await getAllUserCards()
         const totalCountTd = document.getElementById('totalCount');
         if(!res) {
-            // Todo: fazer um display de alerta 
             totalCountTd.innerText = 'Total: 0'
         }
         totalCountTd.innerText = `Total: ${res.count}`;
