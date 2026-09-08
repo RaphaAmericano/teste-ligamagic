@@ -1,4 +1,4 @@
-import { submitNewCard } from "./cards.js"
+import { submitNewCard, getUserCardById } from "./cards.js"
 const cardGames = new Set(['magic', 'pokemon', 'yugioh'])
 
 const selectBoxSelectorsMap = {
@@ -127,7 +127,19 @@ async function submitNewCardForm(event){
     }
 }   
 
+
+async function loadCardForEdit(card_id){
+    const card = await getUserCardById(card_id);
+    console.log(card)
+}
+
 ( () => {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const editCardId = urlParams.get('id');
+    console.log(editCardId)
+    const isEditing = !!editCardId;
+
     document.addEventListener('DOMContentLoaded', async () => {
         const res = await fetch('./json/rarity.json')
         const data = await res.json()
@@ -141,6 +153,11 @@ async function submitNewCardForm(event){
         if(!newCardForm) throw new Error('Erro ao carregar formulário de nova carta')
         
         newCardForm.addEventListener('submit', submitNewCardForm)
+
+        if(isEditing){
+            await loadCardForEdit(editCardId)
+        }
+
 
     })
 

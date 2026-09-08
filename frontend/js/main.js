@@ -9,7 +9,7 @@ function guardRoutes(){
     const isAuthPage = ['/index.html', '/signin.html', '/'].some(
         path => location.pathname.endsWith(path) || location.pathname === path
     )
-    const isLoggedPage = ['/dashboard.html', '/new_card.html'].some(
+    const isLoggedPage = ['/dashboard.html', '/card.html'].some(
         path => location.pathname.endsWith(path) || location.pathname === path
     )
     if(isAuthPage && checkJwtToken()){

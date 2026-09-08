@@ -1,4 +1,4 @@
-import { postNewCard, getUserCards } from "./requests.js"
+import { postNewCard, getUserCards, getCardById } from "./requests.js"
 
 const CARD_GAMES = new Set(['magic', 'pokemon', 'yugioh']);
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -44,5 +44,8 @@ export async function submitNewCard(data){
 } 
 
 export async function getAllUserCards(){
-    return await getUserCards()
+    return await getUserCards();
+}
+export async function getUserCardById(card_id){
+    return await getCardById(card_id);
 }

@@ -28,5 +28,6 @@ $router->post('/api/register', fn() => $authController->register());
 $router->post('/api/login', fn() => $authController->login());
 $router->post('/api/card', fn() => $cardController->create());
 $router->get('/api/cards', fn() => $cardController->userCards());
+$router->get('/api/card/:id', fn() => $cardController->getById());
 
 $router->dispatch();

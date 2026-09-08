@@ -149,4 +149,37 @@ class CardController {
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
         $stmt->close();
     }
+
+    public function getById(): void {
+        $payload = $this->auth->verifyToken();
+        if(!$payload){
+            http_response_code(401);
+            echo json_encode(['error' => 'Token inválido']);
+            return;
+        }
+
+        $card_id = $_GET['card_id'] ?? '';
+        $user_id = $payload['sub'];
+
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare('
+            SELECT c.id, c.name_pt, c.name_en, c.card_game, c.card_set, c.rarity, c.img_url
+            FROM card c
+            INNER JOIN user_card uc ON uc.id_card = c.id
+            WHERE c.id = ? AND uc.id_user = ?
+        ');
+
+        $stmt->bind_param('ss', $card_id, $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $card = $result->fetch_assoc();
+        $stmt->close();
+        if(!$card){
+            http_response_code(404);
+            echo json_encode(['error' => 'Carta não encontrada']);
+            return;
+        }
+
+        echo json_encode($card, JSON_UNESCAPED_UNICODE);
+    }
 }

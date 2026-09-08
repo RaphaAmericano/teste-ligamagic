@@ -14,8 +14,14 @@ class Router {
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri = rtrim($uri, '/');
+        if (preg_match('~/api/card/([a-f0-9-]{36})$~', $uri, $matches)) {
+            $_GET['card_id'] = $matches[1];
+            ($this->routes['GET /api/card/:id'])();
+            return;
+        }
         $key = "$method $uri";
         
+
         if(isset($this->routes[$key])){
             ($this->routes[$key])();
         } else {

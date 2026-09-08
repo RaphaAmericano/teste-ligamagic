@@ -15,3 +15,7 @@ export async function getUserCards(){
     const token = localStorage.getItem('ligamagicJwtToken');
     return await get('/cards', token)
 }
+export async function getCardById(card_id){
+    const token = localStorage.getItem('ligamagicJwtToken');
+    return await get(`/card/${card_id}`, token)
+}

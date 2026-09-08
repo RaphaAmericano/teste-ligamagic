@@ -51,7 +51,7 @@ function createImageTd(card){
 function createEditTd(card){
     const tdElement = document.createElement('td');
     const aElement = document.createElement('a');
-    aElement.href = `http://localhost/edit/${card.id}`;
+    aElement.href = `./card.html?id=${card.id}`;
     aElement.dataset.id = card.id;
     aElement.innerText = "Editar";
     tdElement.appendChild(aElement);
