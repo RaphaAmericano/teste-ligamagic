@@ -41,10 +41,15 @@ export async function postFormData(endpoint, data, token){
 export async function putFormData(endpoint, data, token){
     const res = await fetch(`${API_URL}${endpoint}`, {
         method: "PUT",
-        headers: { 'Authorization': `Bearer ${token}` },
+        headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
         body: data
     })
     const json = await res.json()
     if(!res.ok) throw new Error(json.error || "Erro na requisição.")
     return json
 }
+
+

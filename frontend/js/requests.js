@@ -14,6 +14,11 @@ export async function putEditCard(card_id, data){
     const token = localStorage.getItem('ligamagicJwtToken')
     return await putFormData(`/card/${card_id}`, data, token);
 }
+export async function postCardImage(card_id, data){
+    const token = localStorage.getItem('ligamagicJwtToken')
+    return await postFormData(`/card/${card_id}/image`, data, token);
+}
+
 export async function getUserCards(){
     const token = localStorage.getItem('ligamagicJwtToken');
     return await get('/cards', token)

@@ -1,4 +1,4 @@
-import { postNewCard, putEditCard, getUserCards, getCardById } from "./requests.js"
+import { postNewCard, putEditCard, postCardImage, getUserCards, getCardById } from "./requests.js"
 
 const CARD_GAMES = new Set(['magic', 'pokemon', 'yugioh']);
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -80,8 +80,23 @@ export async function submitEditCard(data){
     if(errors.length > 0){
         throw new Error(errors.join('\n'))
     }
-    return await putEditCard(id, data);
-
+    // promises com postCardImage
+    const params = new URLSearchParams();
+    for(const key of ['name_pt','name_en', 'card_game', 'card_set', 'rarity']){
+        const value = data.get(key);
+        if(value !== null && value !== '') params.append(key, value);
+    }
+    const image = data.get('image');
+    const promises = [putEditCard(id, params)];
+    if(image && image.size > 0){
+        const imageForm = new FormData()
+        imageForm.append('image', image)
+        promises.push(postCardImage(id, imageForm))
+    }
+    console.log(promises)
+    const results = await Promise.allSettled(promises)
+    console.log(results)
+    return results
     
 } 
 
