@@ -2,7 +2,6 @@
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/Router.php';
 require_once __DIR__ . '/Auth.php';
-require_once __DIR__ . '/utils/RarityMap.php';
 require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/CardController.php';
 

@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../Auth.php';
-require_once __DIR__ . '/../utils/RarityMap.php';
 require_once __DIR__ . '/../utils/UUID.php';
 
 class CardController {
@@ -27,14 +26,13 @@ class CardController {
         $name_en = $_POST['name_en'] ?? '';
         $card_game = $_POST['card_game'] ?? '';
         $card_set = $_POST['card_set'] ?? '';
-        $rarityCode = $_POST['rarity'] ?? ''; 
-        $rarity = RARITY_MAP[$rarityCode] ?? null;
+        $rarity = $_POST['rarity'] ?? null;
 
         if(!in_array($card_game, self::CARD_GAMES, true)){
             http_response_code(400);
             echo json_encode(['error' => 'Card game inválido'], JSON_UNESCAPED_UNICODE);
             return;
-            }
+        }
             
         if(strlen($name_pt) > self::MAX_NAME_LENGTH || strlen($name_en) > self::MAX_NAME_LENGTH){
             http_response_code(400);
