@@ -8,8 +8,8 @@ function getSetName(card){
     const card_set = setMapper[card.card_game]?.[card.card_set] ?? card.card_set;
     return card_set;
 }
+
 function getRarity(card){
-    console.log(rarityMapper)
     const card_set = rarityMapper[card.card_game]?.[card.rarity] ?? card.rarity;
     return card_set;
 } 
@@ -51,7 +51,7 @@ function createImageTd(card){
 function createEditTd(card){
     const tdElement = document.createElement('td');
     const aElement = document.createElement('a');
-    aElement.href = `http://localhost/edit/${card.id}`;
+    aElement.href = `./card.html?id=${card.id}`;
     aElement.dataset.id = card.id;
     aElement.innerText = "Editar";
     tdElement.appendChild(aElement);
@@ -86,7 +86,6 @@ function loadCardsRows(cards){
         const res = await getAllUserCards()
         const totalCountTd = document.getElementById('totalCount');
         if(!res) {
-            // Todo: fazer um display de alerta 
             totalCountTd.innerText = 'Total: 0'
         }
         totalCountTd.innerText = `Total: ${res.count}`;
