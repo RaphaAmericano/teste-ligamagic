@@ -48,6 +48,17 @@ function addInfoMessage(value){
     warningTextSpan.innerText = value;
 }
 
+function updateImagePreview(event){
+    const file = event.target.files[0];
+    if(file){
+        const previewImageBlock = document.getElementById('imagePreview')
+        const [labelTag, imgTag ] = previewImageBlock.children;
+        labelTag.innerText = "Pré visualização da imagem"
+        imgTag.src = URL.createObjectURL(file);
+        previewImageBlock.classList.remove('hidden')
+    }
+}
+
 async function loadSets(cardGame){
     const res = await fetch('./json/sets.json')
     const data = await res.json()
@@ -190,8 +201,8 @@ async function loadCardForEdit(card_id){
 
     const urlParams = new URLSearchParams(window.location.search);
     const editCardId = urlParams.get('id');
-    console.log(editCardId)
     const isEditing = !!editCardId;
+    console.log('isEditing', isEditing);
 
     document.addEventListener('DOMContentLoaded', async () => {
         const res = await fetch('./json/rarity.json')
@@ -209,7 +220,11 @@ async function loadCardForEdit(card_id){
 
         if(isEditing){
             await loadCardForEdit(editCardId)
+        } else {
+            const imageInput = document.querySelector('[name="image"]');
+            imageInput.addEventListener('change', updateImagePreview)
         }
+        
 
 
     })
