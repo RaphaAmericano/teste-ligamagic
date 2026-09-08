@@ -10,12 +10,15 @@
         </nav>
         <main>
             <div>
-                <h2>Adicionar nova carta</h2>
+                <h2 id="pageTitle">Adicionar nova carta</h2>
                 <div>
                     <a href="./dashboard.html">Lista de cartas</a>
                 </div>
                 <div>
                     <form id="newCardForm">
+                        <div>
+                            <input name="id" type="hidden">
+                        </div>
                         <div>
                             <label for="name_pt">nome em Português</label>
                             <input name="name_pt"type="text">
@@ -43,6 +46,11 @@
                             <label for="rarity">Raridade</label>
                             <select name="rarity">
                             </select>
+                        </div>
+
+                        <div id="imagePreview" class="hidden">
+                            <label for="image" >Imagem atual</label>
+                            <img  style="max-width:50px" >
                         </div>
                         <div>
                             <label for="image">Imagem</label>

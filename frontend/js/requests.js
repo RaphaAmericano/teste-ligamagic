@@ -1,4 +1,4 @@
-import { get, post, postFormData } from "./services.js"
+import { get, post, postFormData, putFormData } from "./services.js"
 
 export async function postLogin(email, password){
     return await post('/login', { email, password})
@@ -10,7 +10,10 @@ export async function postNewCard(data){
     const token = localStorage.getItem('ligamagicJwtToken')
     return await postFormData('/card', data , token)
 }
-
+export async function putEditCard(card_id, data){
+    const token = localStorage.getItem('ligamagicJwtToken')
+    return await putFormData(`/card/${card_id}`, data, token);
+}
 export async function getUserCards(){
     const token = localStorage.getItem('ligamagicJwtToken');
     return await get('/cards', token)

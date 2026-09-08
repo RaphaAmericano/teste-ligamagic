@@ -38,3 +38,13 @@ export async function postFormData(endpoint, data, token){
     if(!res.ok) throw new Error(json.error || "Erro na requisição.")
     return json
 }
+export async function putFormData(endpoint, data, token){
+    const res = await fetch(`${API_URL}${endpoint}`, {
+        method: "PUT",
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: data
+    })
+    const json = await res.json()
+    if(!res.ok) throw new Error(json.error || "Erro na requisição.")
+    return json
+}
