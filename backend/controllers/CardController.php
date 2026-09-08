@@ -174,6 +174,11 @@ class CardController {
         $result = $stmt->get_result();
         $card = $result->fetch_assoc();
         $stmt->close();
+
+        if($card && $card['img_url'] && str_starts_with($card['img_url'], '/')){
+            $card['img_url'] = 'http://localhost:8080' . $card['img_url'];
+        }
+
         if(!$card){
             http_response_code(404);
             echo json_encode(['error' => 'Carta não encontrada']);

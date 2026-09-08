@@ -8,8 +8,8 @@ function getSetName(card){
     const card_set = setMapper[card.card_game]?.[card.card_set] ?? card.card_set;
     return card_set;
 }
+
 function getRarity(card){
-    console.log(rarityMapper)
     const card_set = rarityMapper[card.card_game]?.[card.rarity] ?? card.rarity;
     return card_set;
 } 
