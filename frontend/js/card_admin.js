@@ -109,24 +109,36 @@ async function setSubmitFormButtonDisabledState(){
     const hasOptions = setSelectBox.children.length > 0
     submitButton.disabled = !hasOptions
 }
+
 async function submitCardForm(event){
     event.preventDefault()
     const formData = new FormData(event.target);
+    const action = formData.get('id') ? 'edit' : 'create'; 
+    const submitFn = submitFormFunctions[action];
+
+    const feedBackMessage = {
+        create: 'Salvando nova carta ',
+        edit: 'Atualizando carta '
+    }
 
     let dots = '';
     const loadingInterval = setInterval(() => {
         dots = dots.length >= 3 ? "" : dots + '.';
-        addInfoMessage('Salvando nova carta ' + dots)
+        addInfoMessage(feedBackMessage[action] + dots)
     }, 400 )
     
-    const submitFn = formData.get('id') ? submitFormFunctions['edit'] : submitFormFunctions['create'] 
+    
  
     try {
         await new Promise(r => setTimeout(r, 800));
         const response = await submitFn(formData)
         clearInterval(loadingInterval)
         addInfoMessage(response.message)
-        resetForm(event.target)
+        if(action === "create") resetForm(event.target)
+        if(action === "edit"){
+            const msg = [...response.message, ...response.errors].join(' | ')
+            addInfoMessage(msg)
+        }
     } catch (error) {
         console.error(error);
         console.error("message" ,error.message);

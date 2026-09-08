@@ -63,6 +63,23 @@ function validateEditCardForm(data){
     return errors
 }
 
+function formatEditResults(results){
+    const output = { success: true, messages: [], errors: [] }
+    const labels = ['Dados da carta', 'Imagem'];
+
+    results.forEach((result, index) => {
+        const label = labels[index] || `Operação ${index + 1 }`;
+        if(result.status === 'fulfilled'){
+            output.messages.push(`${label}: ${result.value.message}`);
+        } else {
+            output.success = false;
+            output.errors.push(`${label}: ${result.reason.message}`);
+        }
+    })
+
+    return output;
+}
+
 export async function submitNewCard(data){
     const errors = validateNewCardForm(data)
     if(errors.length > 0){
@@ -93,10 +110,12 @@ export async function submitEditCard(data){
         imageForm.append('image', image)
         promises.push(postCardImage(id, imageForm))
     }
+    // TODO: formatar esses erros aqui
     console.log(promises)
     const results = await Promise.allSettled(promises)
     console.log(results)
-    return results
+    
+    return formatEditResults(results)
     
 } 
 
