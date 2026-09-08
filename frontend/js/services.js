@@ -6,7 +6,7 @@ function getHeaders(token){
     return headers
 }
 
-export async function get(endpoint, data, token = ''){
+export async function get(endpoint, token = ''){
     const headers = getHeaders(token)
     const res = await fetch(`${API_URL}${endpoint}`, {
         method: "GET",

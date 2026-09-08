@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../Auth.php';
-require_once __DIR__ . '/../utils/RarityMap.php';
 require_once __DIR__ . '/../utils/UUID.php';
 
 class CardController {
@@ -27,14 +26,13 @@ class CardController {
         $name_en = $_POST['name_en'] ?? '';
         $card_game = $_POST['card_game'] ?? '';
         $card_set = $_POST['card_set'] ?? '';
-        $rarityCode = $_POST['rarity'] ?? ''; 
-        $rarity = RARITY_MAP[$rarityCode] ?? null;
+        $rarity = $_POST['rarity'] ?? null;
 
         if(!in_array($card_game, self::CARD_GAMES, true)){
             http_response_code(400);
             echo json_encode(['error' => 'Card game inválido'], JSON_UNESCAPED_UNICODE);
             return;
-            }
+        }
             
         if(strlen($name_pt) > self::MAX_NAME_LENGTH || strlen($name_en) > self::MAX_NAME_LENGTH){
             http_response_code(400);
@@ -101,7 +99,7 @@ class CardController {
 
         $card_id = UUID::createUUID();
         $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare('INSERT INTO card (id, name_pt, name_ig, card_game, card_set, rarity, img_url) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $stmt = $db->prepare('INSERT INTO card (id, name_pt, name_en, card_game, card_set, rarity, img_url) VALUES (?, ?, ?, ?, ?, ?, ?)');
         $stmt->bind_param('sssssss', $card_id, $name_pt, $name_en, $card_game, $card_set, $rarity, $img_url );
 
         if($stmt->execute()){                       
@@ -120,6 +118,35 @@ class CardController {
     }
 
     public function userCards(): void {
+        $payload = $this->auth->verifyToken();
+        if(!$payload){
+            http_response_code(401);
+            echo json_encode(['error' => 'Token inválido ou ausente.'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
 
+        $user_id = $payload['sub'];
+        $db = Database::getInstance()->getConnection();
+
+        $stmt = $db->prepare('
+            SELECT c.id, c.name_en, c.name_pt, c.card_set, c.card_game, c.rarity, c.img_url
+            FROM card c
+            INNER JOIN user_card uc ON uc.id_card = c.id
+            WHERE uc.id_user = ?
+        ');
+        $stmt->bind_param('s', $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $cards = [];
+        while($row = $result->fetch_assoc()){
+            if($row['img_url'] && str_starts_with($row['img_url'], '/')){
+                $row['img_url'] = 'http://localhost:8080' . $row['img_url'];
+            }
+            $cards[] = $row;
+        }
+        $response = ["items" => $cards, "count" => count($cards)];
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        $stmt->close();
     }
 }

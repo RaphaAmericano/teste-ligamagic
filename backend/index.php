@@ -2,7 +2,6 @@
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/Router.php';
 require_once __DIR__ . '/Auth.php';
-require_once __DIR__ . '/utils/RarityMap.php';
 require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/CardController.php';
 
@@ -28,5 +27,6 @@ $router->get('/api', function(){
 $router->post('/api/register', fn() => $authController->register());
 $router->post('/api/login', fn() => $authController->login());
 $router->post('/api/card', fn() => $cardController->create());
+$router->get('/api/cards', fn() => $cardController->userCards());
 
 $router->dispatch();
