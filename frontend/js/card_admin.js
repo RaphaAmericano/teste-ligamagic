@@ -59,6 +59,18 @@ function updateImagePreview(event){
     }
 }
 
+function updateUploadedImagePreview(imgUrl){
+    if(!imgUrl) return
+    const previewImageBlock = document.getElementById('imagePreview')
+    const [labelTag, imgTag ] = previewImageBlock.children;
+    imgTag.src = imgUrl
+}
+
+function editMainHeaderText(value){
+    const titleTag = document.getElementById('pageTitle');
+    titleTag.innerText = value;
+}
+
 async function loadSets(cardGame){
     const res = await fetch('./json/sets.json')
     const data = await res.json()
@@ -147,8 +159,13 @@ async function submitCardForm(event){
         addInfoMessage(response.message)
         if(action === "create") resetForm(event.target)
         if(action === "edit"){
-            const msg = [...response.message, ...response.errors].join(' | ')
+            console.log(response)
+            const msg = [...response.messages, ...response.errors].join(' | ')
+            console.log(msg)
             addInfoMessage(msg)
+            const name_pt = formData.get('name_pt')
+            updateUploadedImagePreview(response.newImageUrl)
+            editMainHeaderText(`Editar carta: ${name_pt}`)
         }
     } catch (error) {
         console.error(error);
@@ -163,9 +180,10 @@ async function submitCardForm(event){
     }
 }   
 
+
+
 function populateForm(card){
-    const titleTag = document.getElementById('pageTitle');
-    titleTag.innerText = `Editar carta: ${card.name_pt}`;
+    editMainHeaderText(`Editar carta: ${card.name_pt}`);
     const inputNameKeys = Object.keys(formInputMap)
     for(const key of inputNameKeys){
         const tag = document.querySelector(formInputMap[key]);

@@ -71,6 +71,9 @@ function formatEditResults(results){
         const label = labels[index] || `Operação ${index + 1 }`;
         if(result.status === 'fulfilled'){
             output.messages.push(`${label}: ${result.value.message}`);
+            if(result.value.img_url){
+                output.newImageUrl = result.value.img_url;
+            }
         } else {
             output.success = false;
             output.errors.push(`${label}: ${result.reason.message}`);
