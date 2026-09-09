@@ -158,8 +158,6 @@ async function submitCardForm(event){
         addInfoMessage(feedBackMessage[action] + dots)
     }, 400 )
     
-    
- 
     try {
         await new Promise(r => setTimeout(r, 800));
         const response = await submitFn(formData)
@@ -167,9 +165,7 @@ async function submitCardForm(event){
         addInfoMessage(response.message)
         if(action === "create") resetForm(event.target)
         if(action === "edit"){
-            console.log(response)
             const msg = [...response.messages, ...response.errors].join(' | ')
-            console.log(msg)
             addInfoMessage(msg)
             const name_pt = formData.get('name_pt')
             updateUploadedImagePreview(response.newImageUrl)

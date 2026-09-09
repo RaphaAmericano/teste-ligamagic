@@ -1,4 +1,4 @@
-import { getAllUserCards } from "./cards.js";
+import { getAllUserCards, submitDeleteCard } from "./cards.js";
 import { loadMappers, cardGameMapper } from "./mappers.js";
 
 let setMapper = {};
@@ -94,14 +94,28 @@ function loadCardsRows(cards){
     
 }
 
+function addInfoMessage(value){
+    const infoMessageDiv = document.getElementById('infoMessage')
+    infoMessageDiv.innerText = value
+}
+
 async function submitDeleteForm(event){
     event.preventDefault();
     const formData = new FormData(event.target);
     const id = formData.get('id');
     
     if(!id) return;
-    
-    // location.reload()
+    try {
+        const response = await submitDeleteCard(id);
+        addInfoMessage()
+        // location.reload()
+    } catch (error) {
+        addInfoMessage(error)
+    } finally {
+        setTimeout(() => {
+            addInfoMessage('')
+        }, 5000)
+    }
 }
 
 function openDeleteModal(event){
