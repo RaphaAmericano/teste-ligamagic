@@ -37,7 +37,7 @@ async function submitForm(event){
         console.warn(error)
         hasError = true;
 
-        setWaringMessages(error || 'Error ao realizar a operação');
+        setWaringMessages(error?.message || 'Erro ao realizar a operação');
     } finally {
         const delay = hasError ? 3000 : 0;
         setTimeout(() => toggleFormLoader(), delay)
