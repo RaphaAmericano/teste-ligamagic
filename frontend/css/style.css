@@ -130,9 +130,71 @@ nav > .nav-actions {
     display: none;
 }
 /* Tabela */
+.delete-button {
+    background-color: transparent;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    box-shadow: none;
+}
+.edit-link {
+    display: inline-block;
+    color: #2563eb;
+    border: 1px solid #93c5fd;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+}
+.edit-link:hover {
+    background-color: #eff6ff;
+    border-color: #2563eb;
+    text-decoration: none;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
 
+thead {
+    background-color: #f8fafc;
+}
 
+th, td {
+    padding: 0.65rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
 
+th {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+tfoot {
+    border-top: 2px solid #e5e7eb;
+}
+
+tfoot td, tfoot th {
+    font-weight: 600;
+    color: #475569;
+    border-bottom: none;
+}
+
+td img {
+    border-radius: 4px;
+}
 /* Forumlário de edição */
 .image-row {
     margin-top: 0.5rem;

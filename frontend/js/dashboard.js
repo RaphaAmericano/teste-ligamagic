@@ -54,19 +54,18 @@ function createEditTd(card){
     aElement.href = `./card.html?id=${card.id}`;
     aElement.dataset.id = card.id;
     aElement.innerText = "Editar";
+    aElement.classList.add('edit-link')
     tdElement.appendChild(aElement);
     return tdElement;
 }
 function createDeleteTd(card){
     const tdElement = document.createElement('td');
     const buttonElement = document.createElement('button');
-    
-    // buttonElement.dataset.id = card.id;
+
     buttonElement.value = card.id;
     buttonElement.innerText = "Excluir";
     buttonElement.type = "button"
-    console.log(buttonElement)
-    // add event listener
+    buttonElement.classList.add('delete-button')
     buttonElement.addEventListener('click', openDeleteModal)
     tdElement.appendChild(buttonElement);
     
