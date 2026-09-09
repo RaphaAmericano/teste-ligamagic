@@ -126,9 +126,10 @@ nav > .nav-actions {
     border: 1px solid #e5e7eb;
     border-radius: 8px;
 }
-.loader.hidden {
+.hidden {
     display: none;
 }
+
 /* Tabela */
 .delete-button {
     background-color: transparent;
