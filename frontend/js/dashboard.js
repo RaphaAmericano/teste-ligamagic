@@ -102,7 +102,9 @@ function addInfoMessage(value){
 function successReload(message, form){
     form.reset()
     const [label, input, span, button] = form.children
+    const closeDeleteModalButton = document.getElementById('closeModalButton')
     button.disabled = true;
+    closeDeleteModalButton.disabled = true;
     addInfoMessage(message)
     setTimeout(() => {
         location.reload()
@@ -133,6 +135,13 @@ function openDeleteModal(event){
     const [ label, input, span, button] = deleteForm.children
     input.value = event.target.value;
     button.disabled = false;
+    const modal = document.getElementById('deleteModal');
+    modal.classList.remove('hidden')
+}
+
+function closeDeleteModal(){
+    const modal = document.getElementById('deleteModal');
+    modal.classList.add('hidden')
 }
 
 (() => {
@@ -151,5 +160,8 @@ function openDeleteModal(event){
 
         const deleteForm = document.getElementById('deleteForm')
         deleteForm.addEventListener('submit', submitDeleteForm)
+
+        const closeDeleteModalButton = document.getElementById('closeModalButton')
+        closeDeleteModalButton.addEventListener('click', closeDeleteModal)
     })
 })()

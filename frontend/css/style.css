@@ -129,6 +129,8 @@ nav > .nav-actions {
 .loader.hidden {
     display: none;
 }
+/* Tabela */
+
 
 
 /* Forumlário de edição */
@@ -144,4 +146,74 @@ nav > .nav-actions {
 
 #submitNewCardButton + div {
     margin-top: 5px;
+}
+
+
+/* Modal de exclusão */
+#deleteModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+} 
+
+#deleteModal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: #1e293b;
+    color: #f1f5f9;
+    border: 1px solid #475569;
+    border-radius: 8px;
+    padding: 1.5rem;
+    max-width: 400px;
+    width: 100%;
+}
+
+.modal-content nav {
+    display: flex;
+    justify-content: flex-end;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 0.5rem;
+}
+
+.modal-content nav button {
+    background-color: transparent;
+    color: #94a3b8;
+    border: none;
+    font-size: 1.2rem;
+    padding: 0.2rem 0.5rem;
+}
+
+.modal-content nav button:hover {
+    color: #f1f5f9;
+}
+
+.modal-content form label {
+    color: #f1f5f9;
+    font-size: 1rem;
+}
+
+.modal-content form span {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.modal-content form button[type="submit"] {
+    background-color: #dc2626;
+    margin-top: 0.5rem;
+}
+
+.modal-content form button[type="submit"]:hover {
+    background-color: #b91c1c;
 }
