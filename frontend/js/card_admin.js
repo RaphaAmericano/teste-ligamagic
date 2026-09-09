@@ -47,12 +47,13 @@ function addInfoMessage(value){
     const infoDiv = document.getElementById('infoDiv')
     const warningTextSpan = document.getElementById('warningText')
     warningTextSpan.innerText = value;
+    infoDiv.classList.toggle('hidden', !value);
 }
 
-function updateImagePreview(event){
+function updateImagePreview(event, selector = 'imagePreview'){
     const file = event.target.files[0];
     if(file){
-        const previewImageBlock = document.getElementById('imagePreview')
+        const previewImageBlock = document.getElementById(selector)
         const [labelTag, imgTag ] = previewImageBlock.children;
         labelTag.innerText = "Pré visualização da imagem"
         imgTag.src = URL.createObjectURL(file);
@@ -184,8 +185,6 @@ async function submitCardForm(event){
     }
 }   
 
-
-
 function populateForm(card){
     editMainHeaderText(`Editar carta: ${card.name_pt}`);
     const inputNameKeys = Object.keys(formInputMap)
@@ -241,11 +240,12 @@ async function loadCardForEdit(card_id){
 
         if(isEditing){
             await loadCardForEdit(editCardId)
-        } else {
-            const imageInput = document.querySelector('[name="image"]');
-            imageInput.addEventListener('change', updateImagePreview)
+        } 
+        else {
         }
-        
+        const selector = isEditing ? 'newImagePreview' : 'imagePreview' 
+        const imageInput = document.querySelector('[name="image"]');
+        imageInput.addEventListener('change', (e) => updateImagePreview(e, selector))
 
 
     })

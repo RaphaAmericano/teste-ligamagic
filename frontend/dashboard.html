@@ -2,20 +2,25 @@
     <head>
         <meta charset="UTF-8">
         <title>Portal Ligamagic - Dashboard</title>
+        <link rel="stylesheet" href="./css/reset.css">
         <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
         <nav>
-            <button id="logout-button" type="button">Sair</button>
+            <h1>Bem vindo ao Portal Ligamagic</h1>
+            <div class="nav-actions">
+                <a href="./card.html">Adicionar carta</a>
+                <button id="logout-button" type="button">Sair</button>
+            </div>
         </nav>
         <main>
             <div>
-                <h1>Bem vindo ao Portal Ligamagic</h1>
+                
             </div>
             <div>
                 <h2>Lista de cartas</h2>
                 <div>
-                    <a href="./card.html">Adicionar carta</a>
+                    
                 </div>
                 <div>
                     <table id="cardListTable">
@@ -43,17 +48,19 @@
                     </table>
                 </div>
             </div>
-            <div id="deleteModal">
-                <nav><button>X</button></nav>
-                <form id="deleteForm">
-                    <label for="id">Deseja realmente apagar a carta?</label>
-                    <input type="hidden" name="id">
-                    <span>Essa ação não pode ser desfeita</span>
-
-                    <button type="submit" disabled="true">Sim</button>
-                </form>
-                <div>
-                    <span id="infoMessage""></span>
+            <div id="deleteModal" class="hidden">
+                <div class="modal-content">
+                    <nav><button type="button" id="closeModalButton">X</button></nav>
+                    <form id="deleteForm">
+                        <label for="id">Deseja realmente apagar a carta?</label>
+                        <input type="hidden" name="id">
+                        <span>Essa ação não pode ser desfeita</span>
+    
+                        <button type="submit" disabled="true">Sim</button>
+                    </form>
+                    <div>
+                        <span id="infoMessage""></span>
+                    </div>
                 </div>
             </div>
         </main>

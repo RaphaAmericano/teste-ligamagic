@@ -54,19 +54,18 @@ function createEditTd(card){
     aElement.href = `./card.html?id=${card.id}`;
     aElement.dataset.id = card.id;
     aElement.innerText = "Editar";
+    aElement.classList.add('edit-link')
     tdElement.appendChild(aElement);
     return tdElement;
 }
 function createDeleteTd(card){
     const tdElement = document.createElement('td');
     const buttonElement = document.createElement('button');
-    
-    // buttonElement.dataset.id = card.id;
+
     buttonElement.value = card.id;
     buttonElement.innerText = "Excluir";
     buttonElement.type = "button"
-    console.log(buttonElement)
-    // add event listener
+    buttonElement.classList.add('delete-button')
     buttonElement.addEventListener('click', openDeleteModal)
     tdElement.appendChild(buttonElement);
     
@@ -102,7 +101,9 @@ function addInfoMessage(value){
 function successReload(message, form){
     form.reset()
     const [label, input, span, button] = form.children
+    const closeDeleteModalButton = document.getElementById('closeModalButton')
     button.disabled = true;
+    closeDeleteModalButton.disabled = true;
     addInfoMessage(message)
     setTimeout(() => {
         location.reload()
@@ -133,6 +134,13 @@ function openDeleteModal(event){
     const [ label, input, span, button] = deleteForm.children
     input.value = event.target.value;
     button.disabled = false;
+    const modal = document.getElementById('deleteModal');
+    modal.classList.remove('hidden')
+}
+
+function closeDeleteModal(){
+    const modal = document.getElementById('deleteModal');
+    modal.classList.add('hidden')
 }
 
 (() => {
@@ -151,5 +159,8 @@ function openDeleteModal(event){
 
         const deleteForm = document.getElementById('deleteForm')
         deleteForm.addEventListener('submit', submitDeleteForm)
+
+        const closeDeleteModalButton = document.getElementById('closeModalButton')
+        closeDeleteModalButton.addEventListener('click', closeDeleteModal)
     })
 })()

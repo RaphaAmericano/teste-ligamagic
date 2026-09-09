@@ -1,67 +1,73 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Portal Ligamagic - Nova Carta</title>
+        <title>Portal Ligamagic - Gestão de carta</title>
+        <link rel="stylesheet" href="./css/reset.css">
         <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
         <nav>
-            <button id="logout-button" type="button">Sair</button>
+            <h2 id="pageTitle">Adicionar nova carta</h2>
+            <div class="nav-actions">
+                <a href="./dashboard.html">Lista de cartas</a>
+                <button id="logout-button" type="button">Sair</button>
+            </div>
         </nav>
         <main>
             <div>
-                <h2 id="pageTitle">Adicionar nova carta</h2>
-                <div>
-                    <a href="./dashboard.html">Lista de cartas</a>
-                </div>
-                <div>
-                    <form id="newCardForm">
-                        <div>
-                            <input name="id" type="hidden">
-                        </div>
-                        <div>
-                            <label for="name_pt">nome em Português</label>
-                            <input name="name_pt"type="text">
-                        </div>
-                        <div>
-                            <label for="name_en">nome em Inglês</label>
-                            <input name="name_en"type="text">
-                        </div>
-                        <div>
-                            <label for="card_game">Card Game</label>
-                            <select name="card_game">
-                                <option></option>
-                                <option value="magic">Magic: The Gathering</option>
-                                <option value="pokemon">Pokémon</option>
-                                <option value="yugioh">Yu-Gi-Oh!</option>
-                            </select>
-                        </div>
-                        <div class="select-blocks">
-                            <label for="card_set">Edições</label>
-                            <select name="card_set">
-                                
-                            </select>
-                        </div>
-                        <div class="select-blocks">
-                            <label for="rarity">Raridade</label>
-                            <select name="rarity">
-                            </select>
-                        </div>
+                <form id="newCardForm">
+                    <div>
+                        <input name="id" type="hidden">
+                    </div>
+                    <div>
+                        <label for="name_pt">nome em Português</label>
+                        <input name="name_pt"type="text">
+                    </div>
+                    <div>
+                        <label for="name_en">nome em Inglês</label>
+                        <input name="name_en"type="text">
+                    </div>
+                    <div>
+                        <label for="card_game">Card Game</label>
+                        <select name="card_game">
+                            <option></option>
+                            <option value="magic">Magic: The Gathering</option>
+                            <option value="pokemon">Pokémon</option>
+                            <option value="yugioh">Yu-Gi-Oh!</option>
+                        </select>
+                    </div>
+                    <div class="select-blocks">
+                        <label for="card_set">Edições</label>
+                        <select name="card_set">
+                            
+                        </select>
+                    </div>
+                    <div class="select-blocks">
+                        <label for="rarity">Raridade</label>
+                        <select name="rarity">
+                        </select>
+                    </div>
 
+                    <div class="image-row">
                         <div id="imagePreview" class="hidden">
                             <label for="image" >Imagem atual</label>
-                            <img  style="max-width:50px" >
+                            <img  style="max-width:120px" >
+                        </div>
+                        <div id="newImagePreview" class="hidden">
+                            <label for="image" >Nova Imagem</label>
+                            <img  style="max-width:120px" >
                         </div>
                         <div>
                             <label for="image">Imagem</label>
                             <input name="image" type="file" accept=".jpg,.jpeg,.png,.webp,.gif">
                         </div>
-                        <div>
-                            <button id="submitNewCardButton" type="submit" disabled="true">Salvar</button>
-                        </div>
-                    </form>
-                </div>
-                <div id="infoDiv">
+                    </div>
+                    
+                    <button id="submitNewCardButton" type="submit" disabled="true">Salvar</button>
+                    
+                </form>
+                
+                <div id="infoDiv" class="loader hidden">
                     <span id="warningText" class=""></span>
                 </div>
             </div>
