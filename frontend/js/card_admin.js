@@ -47,6 +47,7 @@ function addInfoMessage(value){
     const infoDiv = document.getElementById('infoDiv')
     const warningTextSpan = document.getElementById('warningText')
     warningTextSpan.innerText = value;
+    infoDiv.classList.toggle('hidden', !value);
 }
 
 function updateImagePreview(event){
