@@ -24,7 +24,7 @@ class Auth {
         $stmt->execute();
         if($stmt->get_result()->num_rows > 0){
             $stmt->close();
-            return ['error' => 'Email já cadastrado'];
+            return ['error' => 'Credenciais inválidas'];
         }
         $stmt->close();
 
