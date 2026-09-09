@@ -95,7 +95,6 @@ export async function submitNewCard(data){
 export async function submitEditCard(data){
     const errors = validateEditCardForm(data)
     const id = data.get('id');
-    console.log(id)
 
     if(errors.length > 0){
         throw new Error(errors.join('\n'))

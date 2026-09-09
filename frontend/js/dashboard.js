@@ -57,6 +57,22 @@ function createEditTd(card){
     tdElement.appendChild(aElement);
     return tdElement;
 }
+function createDeleteTd(card){
+    const tdElement = document.createElement('td');
+    const buttonElement = document.createElement('button');
+    
+    // buttonElement.dataset.id = card.id;
+    buttonElement.value = card.id;
+    buttonElement.innerText = "Excluir";
+    buttonElement.type = "button"
+    console.log(buttonElement)
+    // add event listener
+    buttonElement.addEventListener('click', openDeleteModal)
+    tdElement.appendChild(buttonElement);
+    
+    return tdElement;
+}
+
 function loadCardsRows(cards){
     const cardListTable = document.getElementById('cardListTable');
     const [tableHead, tableBody, tableFooter] = cardListTable.children;
@@ -69,12 +85,32 @@ function loadCardsRows(cards){
             createSetTd(card),
             createRarityTd(card),
             createImageTd(card),
-            createEditTd(card)
+            createEditTd(card),
+            createDeleteTd(card)
         )
         
         tableBody.appendChild(newTr)
     }
     
+}
+
+async function submitDeleteForm(event){
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const id = formData.get('id');
+    
+    if(!id) return;
+    
+    // location.reload()
+}
+
+function openDeleteModal(event){
+    console.log(event) 
+    const deleteForm = document.getElementById('deleteForm');
+    const [ label, input] = deleteForm.children
+    console.log(input)
+    console.log(event.target.value)
+    input.value = event.target.value;
 }
 
 (() => {
@@ -90,5 +126,8 @@ function loadCardsRows(cards){
         }
         totalCountTd.innerText = `Total: ${res.count}`;
         loadCardsRows(res.items)
+
+        const deleteForm = document.getElementById('deleteForm')
+        deleteForm.addEventListener('submit', submitDeleteForm)
     })
 })()

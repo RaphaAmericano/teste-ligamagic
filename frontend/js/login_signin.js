@@ -4,7 +4,7 @@ function toggleFormLoader(){
     const form = document.querySelector('.main-form')
     const submitButton = document.getElementById('signinSubmitButton');
     const loader = document.querySelector('.loader')
-    submitButton.disabled = !submitButton.disabled
+    // submitButton.disabled = !submitButton.disabled
     form.disabled = !form.disabled
     loader.classList.toggle('hidden')
 }
@@ -16,11 +16,8 @@ const actions = {
 
 function setWaringMessages(message){
     const messageBox = document.querySelector('.loader')
-    console.log(messageBox)
     const [h4Tag] = messageBox.children;
-    console.log(h4Tag)
     h4Tag.innerText = message;
-    console.log(message)
 }
 
 async function submitForm(event){
@@ -32,7 +29,6 @@ async function submitForm(event){
 
     try {
         const response = await fn(event.target.elements)
-        console.log(response)
         if(response.token){
             localStorage.setItem('ligamagicJwtToken', response.token)
             window.location.href = "./dashboard.html"

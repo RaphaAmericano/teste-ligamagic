@@ -28,6 +28,7 @@
                                 <th scope="col">Raridade</th>
                                 <th scope="col">Imagem</th>
                                 <th scope="col">Editar</th>
+                                <th scope="col">Excluir</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,6 +42,16 @@
                         </tfoot>
                     </table>
                 </div>
+            </div>
+            <div id="deleteModal">
+                <nav><button>X</button></nav>
+                <form id="deleteForm">
+                    <label for="id">Deseja realmente apagar a carta?</label>
+                    <input type="hidden" name="id">
+                    <span>Essa ação não pode ser desfeita</span>
+
+                    <button type="submit">Sim</button>
+                </form>
             </div>
         </main>
     </body>
