@@ -22,6 +22,7 @@ function guardRoutes(){
 
 (() => {
     guardRoutes()
+    window.addEventListener('pageshow', () => guardRoutes())
     document.addEventListener('DOMContentLoaded', () => {
         const logoutButton = document.getElementById('logout-button')
         if(logoutButton){

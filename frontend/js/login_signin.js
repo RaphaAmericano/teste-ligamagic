@@ -4,7 +4,6 @@ function toggleFormLoader(){
     const form = document.querySelector('.main-form')
     const submitButton = document.getElementById('signinSubmitButton');
     const loader = document.querySelector('.loader')
-    // submitButton.disabled = !submitButton.disabled
     form.disabled = !form.disabled
     loader.classList.toggle('hidden')
 }
