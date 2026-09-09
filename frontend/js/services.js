@@ -17,6 +17,17 @@ export async function get(endpoint, token = ''){
     return json
 }
 
+export async function ddelete(endpoint, token = ''){
+    const headers = getHeaders(token)
+    const res = await fetch(`${API_URL}${endpoint}`, {
+        method: "DELETE",
+        headers,
+    })
+    const json = await res.json()
+    if(!res.ok) throw new Error(json.error || "Erro na requisição.")
+    return json
+}
+
 export async function post(endpoint, data, token = ""){
     const headers = getHeaders(token)
     const res = await fetch(`${API_URL}${endpoint}`, {

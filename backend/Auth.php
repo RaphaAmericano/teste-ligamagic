@@ -2,9 +2,6 @@
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/JWT.php';
 
-// Rate limiting — previne brute force. Adiciona quando colocar em produção.
-// Refresh token — se o access token expirar. Adiciona quando tiver token.
-
 class Auth {
     private mysqli $db;
     private JWT $jwt;
@@ -42,7 +39,8 @@ class Auth {
             $res->execute();
             $id = $res->get_result()->fetch_assoc()['id'];
             $res->close();
-            return ['id' => $id, 'email' => $email];
+            $token = $this->jwt->generate(['sub' => $id, 'email' => $email]);
+            return ['id' => $id, 'email' => $email, 'token' => $token];
         }
         $stmt->close();
         return ['error' => 'Erro ao criar usuário'];

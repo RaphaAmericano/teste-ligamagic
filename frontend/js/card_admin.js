@@ -21,6 +21,7 @@ const formInputMap = {
 function resetForm(form){
     form.reset();
     clearSelectBoxes()
+    clearImagePreview()
     const submitButton = document.getElementById('submitNewCardButton')
     submitButton.disabled = true
 }
@@ -57,6 +58,13 @@ function updateImagePreview(event){
         imgTag.src = URL.createObjectURL(file);
         previewImageBlock.classList.remove('hidden')
     }
+}
+
+function clearImagePreview(){
+    const previewImageBlock = document.getElementById('imagePreview')
+        const [labelTag, imgTag ] = previewImageBlock.children;
+        previewImageBlock.classList.add('hidden')
+        labelTag.innerText = ""
 }
 
 function updateUploadedImagePreview(imgUrl){
@@ -150,8 +158,6 @@ async function submitCardForm(event){
         addInfoMessage(feedBackMessage[action] + dots)
     }, 400 )
     
-    
- 
     try {
         await new Promise(r => setTimeout(r, 800));
         const response = await submitFn(formData)
@@ -159,9 +165,7 @@ async function submitCardForm(event){
         addInfoMessage(response.message)
         if(action === "create") resetForm(event.target)
         if(action === "edit"){
-            console.log(response)
             const msg = [...response.messages, ...response.errors].join(' | ')
-            console.log(msg)
             addInfoMessage(msg)
             const name_pt = formData.get('name_pt')
             updateUploadedImagePreview(response.newImageUrl)
@@ -220,7 +224,6 @@ async function loadCardForEdit(card_id){
     const urlParams = new URLSearchParams(window.location.search);
     const editCardId = urlParams.get('id');
     const isEditing = !!editCardId;
-    console.log('isEditing', isEditing);
 
     document.addEventListener('DOMContentLoaded', async () => {
         const res = await fetch('./json/rarity.json')

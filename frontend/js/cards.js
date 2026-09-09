@@ -1,4 +1,4 @@
-import { postNewCard, putEditCard, postCardImage, getUserCards, getCardById } from "./requests.js"
+import { postNewCard, putEditCard, postCardImage, getUserCards, getCardById, deleteCardById } from "./requests.js"
 
 const CARD_GAMES = new Set(['magic', 'pokemon', 'yugioh']);
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -95,7 +95,6 @@ export async function submitNewCard(data){
 export async function submitEditCard(data){
     const errors = validateEditCardForm(data)
     const id = data.get('id');
-    console.log(id)
 
     if(errors.length > 0){
         throw new Error(errors.join('\n'))
@@ -113,15 +112,14 @@ export async function submitEditCard(data){
         imageForm.append('image', image)
         promises.push(postCardImage(id, imageForm))
     }
-    // TODO: formatar esses erros aqui
-    console.log(promises)
     const results = await Promise.allSettled(promises)
-    console.log(results)
-    
     return formatEditResults(results)
-    
 } 
 
+export async function submitDeleteCard(card_id){
+    if(!card_id) throw new Error("Id da carta a ser excluída é obrigatório");
+    return await deleteCardById(card_id);
+}
 export async function getAllUserCards(){
     return await getUserCards();
 }
