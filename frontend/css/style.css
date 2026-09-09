@@ -120,3 +120,19 @@ nav > .nav-actions {
 .loader.hidden {
     display: none;
 }
+
+
+/* Forumlário de edição */
+.image-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+.image-row > div {
+    flex: 1;
+}
+
+#submitNewCardButton + div {
+    margin-top: 5px;
+}
+
