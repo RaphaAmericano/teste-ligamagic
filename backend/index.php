@@ -7,7 +7,7 @@ require_once __DIR__ . '/controllers/CardController.php';
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: http://localhost');
-header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -31,5 +31,6 @@ $router->get('/api/cards', fn() => $cardController->userCards());
 $router->get('/api/card/:id', fn() => $cardController->getById());
 $router->put('/api/card/:id', fn() => $cardController->editCard());
 $router->post('/api/card/:id/image', fn() => $cardController->uploadImage());
+$router->delete('/api/card/:id', fn() => $cardController->deleteCard());
 
 $router->dispatch();

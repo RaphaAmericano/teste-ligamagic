@@ -14,6 +14,10 @@ class Router {
         $this->routes['PUT ' . $path] = $handler;
     }
 
+    public function delete(string $path, callable $handler): void {
+        $this->routes['DELETE ' . $path] = $handler;
+    }
+
     public function dispatch(): void {
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

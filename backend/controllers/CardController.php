@@ -361,4 +361,47 @@ class CardController {
         }
         $stmt->close();
     }
+
+    public function deleteCard(): void {
+        $payload = $this->auth->verifyToken();
+        if(!$payload){
+            http_response_code(401);
+            echo json_encode(['error' => 'Token inválido ou ausente'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $card_id = $_GET['card_id'] ?? '';
+        $user_id = $payload['sub'];
+        $db = Database::getInstance()->getConnection();
+
+        $check = $db->prepare('SELECT c.id FROM card c INNER JOIN user_card uc ON uc.id_card = c.id WHERE c.id = ? AND uc.id_user = ?');
+        $check->bind_param('ss', $card_id, $user_id);
+        $check->execute();
+
+        if(!$check->get_result()->fetch_assoc()){
+            $check->close();
+            http_response_code(404);
+            echo json_encode(['error' => 'Carta não encontrada'], JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+        $check->close();
+
+        $rel = $db->prepare('DELETE FROM user_card WHERE id_card = ?');
+        $rel->bind_param('s', $card_id);
+        $rel->execute();
+        $rel->close();
+        
+        $stmt = $db->prepare('DELETE FROM card WHERE id = ?');
+        $stmt->bind_param('s', $card_id);
+        if($stmt->execute()){
+            echo json_encode(['message' => 'Carta deletada com sucesso'], JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Erro ao deletar carta'], JSON_UNESCAPED_UNICODE);
+        }
+
+        $stmt->close();
+    }
+
 }

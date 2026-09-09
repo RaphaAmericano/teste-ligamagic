@@ -99,6 +99,16 @@ function addInfoMessage(value){
     infoMessageDiv.innerText = value
 }
 
+function successReload(message, form){
+    form.reset()
+    const [label, input, span, button] = form.children
+    button.disabled = true;
+    addInfoMessage(message)
+    setTimeout(() => {
+        location.reload()
+    }, 3000)
+}
+
 async function submitDeleteForm(event){
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -107,9 +117,9 @@ async function submitDeleteForm(event){
     if(!id) return;
     try {
         const response = await submitDeleteCard(id);
-        addInfoMessage()
-        // location.reload()
+        successReload(response.message, event.target )
     } catch (error) {
+        console.log(error);
         addInfoMessage(error)
     } finally {
         setTimeout(() => {
@@ -119,12 +129,10 @@ async function submitDeleteForm(event){
 }
 
 function openDeleteModal(event){
-    console.log(event) 
     const deleteForm = document.getElementById('deleteForm');
-    const [ label, input] = deleteForm.children
-    console.log(input)
-    console.log(event.target.value)
+    const [ label, input, span, button] = deleteForm.children
     input.value = event.target.value;
+    button.disabled = false;
 }
 
 (() => {
