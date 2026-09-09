@@ -95,6 +95,11 @@ input::placeholder {
 .main-form > button {
     margin-top: 5px;
 }
+nav > .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
 .loader {
     position: absolute;
     bottom: 0;
