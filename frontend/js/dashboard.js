@@ -120,7 +120,7 @@ async function submitDeleteForm(event){
         const response = await submitDeleteCard(id);
         successReload(response.message, event.target )
     } catch (error) {
-        console.log(error);
+        console.warn(error);
         addInfoMessage(error)
     } finally {
         setTimeout(() => {

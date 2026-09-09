@@ -179,7 +179,6 @@ async function submitCardForm(event){
         addInfoMessage(error?.message || "Erro ao salvar nova carta.")
     } finally  {
         setTimeout(() => {
-            console.log('Finally...')
             addInfoMessage("")
         }, 5000);
     }
