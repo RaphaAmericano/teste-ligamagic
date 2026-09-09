@@ -24,6 +24,12 @@ main {
     margin: 0 auto;
     padding: 3rem 2rem;
 }
+main > div {
+    margin-bottom: 1.5rem;
+}
+main > div:last-child {
+    margin-bottom: 0;
+}
 button {
     display: inline-flex;
     align-items: center;
@@ -86,6 +92,26 @@ input::placeholder {
 .main-form {
     /* background-color: aqua; */
 }
-.hidden {
+.main-form > button {
+    margin-top: 5px;
+}
+.loader {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    color: #6b7280;
+    font-size: 1rem;
+    background-color: #f5f5f5;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+.loader.hidden {
     display: none;
 }
